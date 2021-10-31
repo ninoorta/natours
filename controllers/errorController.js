@@ -93,7 +93,7 @@ module.exports = (err, req, res, next) => {
     // let error = { ...err };
     console.log('error in production', err);
     let error = Object.assign(err);
-    console.log('error name', error.name);
+    // console.log('error name', error.name);
 
     if (error.name === 'CastError') {
       error = handleCastErrorDB(error);
