@@ -29,13 +29,13 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
       },
     ],
   });
+
+  console.log('successfully created session');
   // 3) Create session as response
   res.status(200).json({
     status: 'success',
     session,
   });
-
-  next();
 });
 
 // exports.createBookingCheckout = catchAsync(async (req, res, next) => {
@@ -54,10 +54,14 @@ const createBookingCheckout = async (session) => {
   const tour = session.client_reference_id;
   const user = (await User.findOne({ email: session.customer_email }))._id;
   const price = session.line_items[0].amount / 100;
+  console.log('run to this');
+  console.log(user);
   await Booking.create({ tour, user, price });
 };
 
 exports.webhookCheckout = (req, res, next) => {
+  console.log('run to this webhook');
+
   const signature = req.headers['stripe-signature'];
   let event;
   try {
